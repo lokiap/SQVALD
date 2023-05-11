@@ -1,0 +1,109 @@
+{% extends "base.html.twig" %}
+
+{% block title %}SQVALD | Membres{% endblock %}
+
+{% block style %}
+	<style>
+        button {
+            color: rgb(9, 116, 110) !important;
+            border-color: rgb(9, 116, 110) !important;
+        }
+
+        button:hover {
+            color: white !important;
+            background-color: rgb(9, 116, 110) !important;
+        }
+
+		.search {
+			border: solid 1px;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row bootstrap snippets bootdeys">
+			<h1 class="text-center mt-3">Membres</h1>
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+				  integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+				  crossorigin="anonymous">
+			<div class="container">
+				<div class="row justify-content-center my-3">
+					<div class="col-12 col-md-10 col-lg-8 rounded brd-secondary search">
+						{{ form_start(form, {attr: {class:'filter'}}) }}
+						<div class="card-body row no-gutters align-items-center">
+							<div class="col-auto">
+								<i class="fas fa-search h4 mb-0 text-body"></i>
+							</div>
+							<!--end of col-->
+							<div class="col">
+								{{ form_label(form.partner) }}
+								{{ form_widget(form.partner) }}
+							</div>
+							<!--end of col-->
+							<div class="col-auto">
+								<button class="btn btn-lg" type="submit">Rechercher</button>
+							</div>
+							<!--end of col-->
+						</div>
+						{{ form_end(form) }}
+					</div>
+					<!--end of col-->
+				</div>
+			</div>
+		</div>
+		{% if users | length > 0 %}
+			{% for user in users %}
+				<div class="card card-custom mb-3 brd-primary">
+					<div class="card-header p-0">
+						<p class="card-name h4 mb-0 p-2 d-inline-block w-25 bgrd-primary-light color-accent-light"> {{ user.fullName }} </p>
+					</div>
+					<div class="card-body">
+						<div class="row mb-2">
+							<div class="col-4">
+								<i class="fa fa-envelope"></i>
+								<a href="mailto:{{ user.email }}">{{ user.email }}</a>
+							</div>
+							<div class="col-4">
+								{% if user.phone %}
+									<i class="fa fa-phone"></i>
+									{{ user.phone }}
+								{% endif %}
+							</div>
+							<div class="col-4">
+								{% if user.webSite %}
+									<i class="fas fa-external-link-alt"></i>
+									Site web : <a href="{{ user.webSite }}">{{ user.webSite }}</a>
+								{% endif %}
+							</div>
+						</div>
+						{% if user.place %}
+							<div class="row mb-2">
+								<div class="col-12">
+									<i class="fas fa-map-marker-alt"></i>
+									{{ user.place }}
+								</div>
+							</div>
+						{% endif %}
+						<div class="row">
+							<div class="col-12">
+								<i class="fas fa-handshake color-primary"></i>
+								Partenaire : {{ user.partner.content }}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			<div class="d-flex justify-content-center">
+				{% do users.setPageRange(5) %}
+				{{ knp_pagination_render(users, 'pagination/pagination.html.twig') }}
+			</div>
+			<a href="{{ path('show_membre') }}">Revenir sur la liste complète</a>
+		{% else %}
+			<h1>Aucun résultat pour votre recherche</h1>
+			<a href="{{ path('show_membre') }}">Revenir sur la liste complète</a>
+		{% endif %}
+	</div>
+
+{% endblock %}

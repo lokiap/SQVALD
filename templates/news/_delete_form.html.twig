@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('news_delete', {'id': cNews.id}) }}" style="display: flex"
+      onsubmit="return confirm('Confirmer la suppression de :\n\&quot;{{ cNews.title }}\&quot; ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cNews.id) }}">
+    <button type="submit" class="btn-del rounded fw-bold align-self-center mb-0 mx-2 h3"><i class="fa fa-trash"></i>
+    </button>
+</form>

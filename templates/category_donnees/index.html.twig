@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CategoryDonnees index{% endblock %}
+
+{% block body %}
+    <h1>CategoryDonnees index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category_donnee in category_donnees %}
+            <tr>
+                <td>{{ category_donnee.id }}</td>
+                <td>{{ category_donnee.name }}</td>
+                <td>
+                    <a href="{{ path('category_donnees_show', {'id': category_donnee.id}) }}">show</a>
+                    <a href="{{ path('category_donnees_edit', {'id': category_donnee.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('category_donnees_new') }}">Create new</a>
+{% endblock %}

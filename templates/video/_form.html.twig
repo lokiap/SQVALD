@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+{{ form_row(form.title) }}
+{% if errorMessage is defined %}
+    <p class="m-0 form-text" style="color: red">{{ errorMessage }}</p>
+{% endif %}
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.link) }}
+    </div>
+    <div class="col-6">
+        <div class="mb-3">
+            <label class="form-label" for="video_srcFile_file">Fichier</label>
+            {{ form_widget(form.srcFile) }}
+        </div>
+    </div>
+</div>
+<div class="row" id="formAuthors">
+    {{ form_label(form.authors) }}
+    {{ form_help(form.authors) }}
+    {{ form_widget(form.authors) }}
+</div>
+{{ form_rest(form) }}
+<button type="submit" id="btn" hidden>{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+<div class="row justify-content-center my-3" id="submitRow">
+    <label for="btn" class="btn searchBtn w-auto mx-2">Valider</label>
+</div>

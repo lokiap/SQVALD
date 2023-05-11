@@ -1,0 +1,24 @@
+{# <div class="card">
+    <div class="card-body">
+        <h3><a href="{{ path('showNews', {'id':new.id}) }}">{{ new.title }}</a></h3>
+    <p>Résumé : {{ new.resume }}</p>
+    <p> Du {{ new.startCreatedAt ? new.startCreatedAt |date('Y-m-d')}} Au {{ new.endCreatedAt ? new.endCreatedAt|date('Y-m-d')}} </p>
+    </div>
+</div >
+#}
+
+<div class="card mb-3" >
+<div class="row g-0">
+    <div class="col-md-3">
+        <img class="img-crop" src="{{ asset('assets/img/article-1.jpg') }}">
+    </div>
+    <div class="col-md-9">
+        <div class="card-body">
+            <h3><a href="{{ path('showNews', {'id':new.id}) }}">{{ new.title }}</a></h3>
+            <p class="card-text">Résumé : {{ new.resume }}</p>
+            <p> Du {{ new.startCreatedAt ? new.startCreatedAt |date('Y-m-d')}} Au {{ new.endCreatedAt ? new.endCreatedAt|date('Y-m-d')}}</p>
+
+        </div>
+    </div>
+</div>
+</div>

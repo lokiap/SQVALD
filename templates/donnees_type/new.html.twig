@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New DonneesType{% endblock %}
+
+{% block body %}
+    <h1>Create new DonneesType</h1>
+
+    {{ include('donnees_type/_form.html.twig') }}
+
+    <a href="{{ path('donnees_type_index') }}">back to list</a>
+{% endblock %}

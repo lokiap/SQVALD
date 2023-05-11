@@ -1,0 +1,42 @@
+<div id="news-content" class="tab-pane fade" role="tabpanel" aria-labelledby="news-tab">
+	<div class="d-flex flex-row justify-content-between px-3">
+		<h2 class="d-inline m-0">Mes Nouvelles</h2>
+		<a href="{{ path('news_new') }}" class="btn searchBtn"
+		   style="text-transform: none">Nouvelle nouvelle</a>
+	</div>
+	{% if app.user.newstypes %}
+		<small class="px-3">Cliquez sur une nouvelle pour la modifier</small>
+		<div class="list-group list-group-flush mt-3">
+			{% for cNews in app.user.newstypes|sort((a, b) => b.createdAt <=> a.createdAt) %}
+				<div class="d-flex flex-row {% if not(loop.last) %}border-bottom{% endif %}">
+					<a href="{{ path('news_edit', { 'slug' : cNews.slug }) }}"
+
+					   class="list-group-item list-group-item-action flex-column align-items-start border-0 bgrd-accent-light"
+					   style="text-transform: none; font-weight: normal">
+						{% if not(cNews.isActive) %}
+							<p class="text-warning m-0">Cette nouvelle est en attente de validation par
+								un
+								administrateur</p>
+						{% endif %}
+						<div class="d-flex w-100 justify-content-between mb-2">
+							<h3 class="h5">{{ cNews.title }}</h3>
+							<small>{{ cNews.createdAt|format_datetime(locale='fr',pattern='d MMM Y') }}</small>
+						</div>
+						<p>{{ cNews.getSummary }}</p>
+						<small>Auteur(s) :
+							{% for author in cNews.authors %}
+								{% if loop.index != 1 %}
+									{{ ', ' }}
+								{% endif %}
+								{{ author.getFullName }}
+							{% endfor %}
+						</small>
+					</a>
+					{{ include('news/_delete_form.html.twig') }}
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>Aucune nouvelle publiée</p>
+	{% endif %}
+</div>

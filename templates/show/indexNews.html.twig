@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex flex-row align-items-center justify-content-between">
+                    <h1>{{ news.title }}</h1>
+                    <p class="m-0">Ajouté le {{ news.createdAt|format_datetime(locale='fr',pattern='d MMM Y') }}</p>
+                </div>
+                <p class="m-0">Auteur(s) :
+                    {% for author in news.authors %}
+                        {% if loop.index != 1 %}
+                            {{ ', ' }}
+                        {% endif %}
+                        {{ author.getFullName }}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 py-4">
+                {{ news.content|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

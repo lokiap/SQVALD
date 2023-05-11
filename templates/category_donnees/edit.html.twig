@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories de documents | Modifier{% endblock %}
+
+{% block body %}
+    <h1>Edit CategoryDonnees</h1>
+
+    {{ include('category_donnees/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('category_donnees_index') }}">back to list</a>
+
+    {{ include('category_donnees/_delete_form.html.twig') }}
+{% endblock %}

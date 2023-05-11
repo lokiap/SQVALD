@@ -1,0 +1,20 @@
+{{ form_start(form) }}
+<div class="row align-items-end">
+	<div class="col-4">{{ form_row(form.categorydonnees) }}</div>
+	<div class="col-4">{{ form_row(form.imageFile) }}</div>
+	<div class="col-4">{{ form_row(form.brochureFile) }}</div>
+</div>
+{{ form_row(form.title) }}
+{{ form_row(form.resume) }}
+{{ form_row(form.content) }}
+<div class="row" id="formAuthors">
+	{{ form_label(form.author) }}
+	{{ form_help(form.author) }}
+	{{ form_widget(form.author) }}
+</div>
+{{ form_rest(form) }}
+<button type="submit" id="btn" class="btn" hidden>{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+<div class="row justify-content-center my-3" id="submitRow">
+	<label for="btn" class="btn searchBtn w-auto mx-2">Valider</label>
+</div>

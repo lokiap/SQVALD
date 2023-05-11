@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SQVALD | Vérification de l'Email{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>Vérifier votre adresse Email</h1>
+        <p>Un email de vérification a été envoyé à votre adresse. Cliquez sur le lien pour être capable de vous connecter</p>
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}

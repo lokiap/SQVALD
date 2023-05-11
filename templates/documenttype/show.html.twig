@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Documenttype{% endblock %}
+
+{% block body %}
+    <h1>Documenttype</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ documenttype.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ documenttype.title }}</td>
+            </tr>
+            <tr>
+                <th>Resume</th>
+                <td>{{ documenttype.resume }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>{{ documenttype.picture }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ documenttype.createdAt ? documenttype.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>StartCreatedAt</th>
+                <td>{{ documenttype.startCreatedAt ? documenttype.startCreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EndCreatedAt</th>
+                <td>{{ documenttype.endCreatedAt ? documenttype.endCreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('documenttype_index') }}">back to list</a>
+
+    <a href="{{ path('documenttype_edit', {'id': documenttype.id}) }}">edit</a>
+
+    {{ include('documenttype/_delete_form.html.twig') }}
+{% endblock %}

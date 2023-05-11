@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SQVALD | Inscription{% endblock %}
+
+{% block style %}
+	<style>
+		label.required:after {
+			content: ' *';
+			color: red;
+		}
+
+		.form-control::placeholder {
+			color: #999;
+		}
+
+		button:hover {
+			background-color: rgb(9,116,110);
+			color: white !important;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success" role="alert">{{ message }}</div>
+	{% endfor %}
+	<div class="register mt-3">
+		<div class="container">
+			<div class="heading text-center"><h1>Inscription</h1></div>
+			<div class="message-flash">
+				{% for flashError in app.flashes('verify_email_error') %}
+					<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+				{% endfor %}
+			</div>
+
+			{{ form_start(registrationForm) }}
+			<h2 class="border-bottom my-3" style="padding: 0.5rem 0">Identité</h2>
+			<div class="form-user row">
+				<div class="col-4"> {{ form_row(registrationForm.firstname) }}</div>
+				<div class="col-4">{{ form_row(registrationForm.lastname) }}</div>
+				<div class="form-email col-4">{{ form_row(registrationForm.email) }}</div>
+			</div>
+
+			<div class="form-password row justify-content-center">
+				<div class="col-4">
+					{{ form_row(registrationForm.plainPassword.first) }}
+				</div>
+				<div class="col-4">
+					{{ form_row(registrationForm.plainPassword.second) }}
+				</div>
+			</div>
+
+			<h2 class="border-bottom my-3" style="padding: 0.5rem 0">Informations complémentaires</h2>
+			<div class="row">
+				<div class="col-12">{{ form_row(registrationForm.partner) }}</div>
+			</div>
+			<div class="row">
+				<div class="form-phone col-4">{{ form_row(registrationForm.phone) }}</div>
+				<div class="form-website col-4">{{ form_row(registrationForm.webSite) }}</div>
+				<div class="form-place col-4">{{ form_row(registrationForm.place) }}</div>
+			</div>
+
+			<div class="row justify-content-center">
+				<div class="col-3 text-center">
+					<button type="submit" class="btn btn-lg w-100 bgrd-primary-light color-accent-light" name="register">S'inscrire</button>
+				</div>
+			</div>
+			{{ form_rest(registrationForm) }}
+			{{ form_end(registrationForm) }}
+
+
+			<div class="form-note text-center">Déjà membre ? <a href="{{ path('app_login') }}">Connexion</a></div>
+
+		</div>
+	</div>
+{% endblock %}

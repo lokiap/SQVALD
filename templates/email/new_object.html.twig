@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Nouvel object</title>
+</head>
+<body>
+<div class="container">
+	<h1 class="header text-center">SQVALD</h1>
+	<div class="content">
+		<p>Un nouvel object est en attente de validation de la part d'un administrateur.</p>
+		<h2 class="border-bottom">{{ type }}</h2>
+		<p>Titre : {{ title }}</p>
+		{% if category %}<p>Catégorie : {{ category }}</p>{% endif %}
+		<p>Auteur{% if authors|length > 1 %}s{% endif %} :
+			{% for author in authors %}
+				{% if loop.index != 1 %}
+					{{ ', ' }}
+				{% endif %}
+				{{ author }}
+			{% endfor %}</p>
+		<p>Validez cette objet sur <a href="{{ url('admin') }}">{{ url('admin') }}</a></p>
+	</div>
+</div>
+</body>
+</html>

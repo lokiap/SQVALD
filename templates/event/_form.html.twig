@@ -1,0 +1,23 @@
+{{ form_start(form) }}
+<div class="row align-items-end">
+	<div class="col-4">{{ form_row(form.category) }}</div>
+	<div class="col-8">{{ form_row(form.title) }}</div>
+</div>
+<div class="row">
+	<div class="col-4">{{ form_row(form.place) }}</div>
+	<div class="col-4">{{ form_row(form.dateBegin) }}</div>
+	<div class="col-4">{{ form_row(form.dateEnd) }}</div>
+</div>
+{{ form_row(form.resume) }}
+{{ form_row(form.content) }}
+<div class="row" id="formAuthors">
+	{{ form_label(form.author) }}
+	{{ form_help(form.author) }}
+	{{ form_widget(form.author) }}
+</div>
+{{ form_rest(form) }}
+<button type="submit" id="btn" hidden>{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+<div class="row justify-content-center my-3" id="submitRow">
+	<label for="btn" class="btn searchBtn w-auto mx-2">Valider</label>
+</div>

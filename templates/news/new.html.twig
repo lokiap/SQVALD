@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SQVALD | Nouveau | Nouvelle{% endblock %}
+
+{% block style %}
+    <style>
+        label.required:after {
+            content: " *";
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    <script>
+        window.onload = function () {
+            var backBtn = document.getElementById('backBtn');
+            var row = document.getElementById('submitRow');
+            row.appendChild(backBtn);
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="login_register_wrap section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="login_wrap">
+                        <div class="padding_eight_all">
+                            <div class="heading_s1">
+                                <p class="h2 my-3" style="text-align: left">Créer une nouvelle nouvelle</p>
+                            </div>
+                            <div class="content">
+                                {{ include('news/_form.html.twig') }}
+                                <a class="btn btn-light w-auto mx-2" style="text-transform: none" id="backBtn" href="{{ path('account') }}">Retour</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

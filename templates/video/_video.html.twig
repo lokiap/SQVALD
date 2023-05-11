@@ -1,0 +1,15 @@
+<div class="card mb-3" >
+<div class="row g-0">
+    <div class="col-md-3">
+        <img class="img-crop" src="{{ asset('assets/img/article-1.jpg') }}">
+    </div>
+    <div class="col-md-9">
+        <div class="card-body">
+            <h3><a href="{{ path('showVideo', {'id':video.id}) }}">{{ video.title }}</a></h3>
+            <p class="card-text">Résumé : {{ video.resume }}</p>
+            <p> Du {{ video.startCreatedAt ? video.startCreatedAt |date('Y-m-d')}} Au {{ video.endCreatedAt ? video.endCreatedAt|date('Y-m-d')}}</p>
+
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,68 @@
+<div id="infos-content" class="tab-pane fade active show" role="tabpanel"
+	 aria-labelledby="infos-tab">
+	<form method="post" name="enq">
+		<div class="d-flex flex-row justify-content-between px-3">
+			<h2 class="d-inline m-0">Mes informations</h2>
+			<button type="button" id="showForm" onclick="
+            						document.getElementById('showForm').style.display = 'none';
+            						document.getElementById('submitModify').style.display = 'inline';
+         							document.getElementById('firstname').removeAttribute('disabled');
+         							document.getElementById('firstnameLabel').classList.add('required');
+            						document.getElementById('lastname').removeAttribute('disabled');
+         							document.getElementById('lastnameLabel').classList.add('required');
+         							document.getElementById('phone').removeAttribute('disabled');
+            						document.getElementById('place').removeAttribute('disabled');
+            						document.getElementById('webSite').removeAttribute('disabled');
+            						document.getElementById('partner').removeAttribute('disabled');
+									"
+					class="btn searchBtn">Modifier
+			</button>
+			<input id="submitModify" class="btn searchBtn" type="submit" value="Valider"
+				   style="display: none">
+		</div>
+		<div class="px-3">
+			<div class="row my-3">
+				<div class="form-group col-6">
+					<label id="firstnameLabel" for="firstname">Prénom</label>
+					<input id="firstname" value="{{ app.user.firstname }}" class="form-control"
+						   name="firstname" type="text" disabled required>
+				</div>
+				<div class="form-group col-6">
+					<label id="lastnameLabel" for="lastname">Nom</label>
+					<input id="lastname" value="{{ app.user.lastname }}" class="form-control"
+						   name="lastname" type="text" disabled required>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="form-group col-4">
+					<label for="phone">Tél</label>
+					<input id="phone" value="{{ app.user.phone }}" class="form-control"
+						   name="phone" type="tel" disabled>
+				</div>
+
+				<div class="form-group col-4">
+					<label for="place">Localisation</label>
+					<input id="place" value="{{ app.user.place }}" class="form-control"
+						   name="place" type="text" disabled>
+				</div>
+
+				<div class="form-group col-4">
+					<label for="webSite">Site web</label>
+					<input id="webSite" value="{{ app.user.webSite }}" class="form-control"
+						   name="webSite" type="url" disabled>
+				</div>
+			</div>
+			<div class="row my-3">
+				<div class="form-group col-12">
+					<label for="partner">Partenaire</label>
+					<select class="form-select" id="partner" name="partner" disabled>
+						{% for partner in partners %}
+							<option label="{{ partner.content }}" value="{{ partner.id }}" {% if (app.user.partner is not null and app.user.partner.id == partner.id) %}selected{% endif %}></option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
