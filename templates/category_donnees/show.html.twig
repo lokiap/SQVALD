@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CategoryDonnees{% endblock %}
+
+{% block body %}
+    <h1>CategoryDonnees</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ category_donnee.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ category_donnee.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('category_donnees_index') }}">back to list</a>
+
+    <a href="{{ path('category_donnees_edit', {'id': category_donnee.id}) }}">edit</a>
+
+    {{ include('category_donnees/_delete_form.html.twig') }}
+{% endblock %}

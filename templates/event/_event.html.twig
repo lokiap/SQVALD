@@ -1,0 +1,28 @@
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-3">
+            <img src="{{ asset('uploads/' ~ documenttype.picture) }}" style="width:200px; height: 200px"
+                 class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <h5 class="card-title">{{ documenttype.title }}</h5>
+                <div class="card-text">{{ documenttype.resume|raw }}</div>
+                <p class="card-text">
+                    Auteur(s) :
+                    {% set authors = documenttype.author %}
+                    {% set chaine = "" %}
+                    {% for author in authors %}
+                        {% set chaine = chaine ~ author.getFullName %}
+                        {% set chaine = chaine ~ ', ' %}
+                    {% endfor %}
+                    {{ chaine }}
+                </p>
+                <p style="font-style: italic">{{ documenttype.createdAt ? documenttype.createdAt|date('Y-m-d') : '' }}</p>
+                {% if documenttype.brochureFilename %}
+                    <a href="{{ asset('uploads/' ~ documenttype.brochureFilename) }}">Télécharger l'article</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

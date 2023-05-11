@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="header text-center">SQVALD</h1>
+    <div class="content">
+        <p>Un nouvel utilisateur est en attente de validation de la part d'un administrateur.</p>
+        <hr class="featurette-divider my-4"/>
+        <p>Nom : {{ user.getFullName }}</p>
+        <p>Email : {{ user.email }}</p>
+        {% if user.phone %}<p>Tél : {{ user.phone }}</p>{% endif %}
+        {% if user.webSite %}<p>Site web : {{ user.webSite }}</p>{% endif %}
+    </div>
+</div>
+</body>
+</html>

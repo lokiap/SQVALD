@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SQVALD | Vidéos{% endblock %}
+
+{% block style %}
+	<style>
+        #resetFilter {
+            text-transform: none;
+            font-weight: normal;
+        }
+
+        #resetFilter:hover {
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: initial;
+            background-color: unset;
+            box-shadow: unset;
+        }
+
+        .accordion-button:hover {
+            background-color: rgba(0, 0, 0, .05);
+        }
+
+        .accordion-button {
+            padding: .5rem 1.5rem .5rem .75rem;
+            font-size: 2rem;
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        }
+
+        .accordion-item:last-of-type .accordion-button.collapsed {
+            border-bottom-right-radius: unset;
+            border-bottom-left-radius: unset;
+        }
+
+        hr.featurette-divider {
+            height: .5px;
+        }
+	</style>
+{% endblock %}
+
+{% block body %}
+	<main>
+		<div class="container d-flex justify-content-between align-items-center">
+			<h1 class="my-3">Vidéos</h1>
+			<a class="text-muted mx-4 text-decoration-none" id="resetFilter"
+			   href="{{ path('videos_index') }}">Supprimer
+				les filtres</a>
+		</div>
+		<hr class="featurette-divider mt-0 mb-0">
+		<div class="accordion accordion-flush p-0" id="accordionExample">
+			<div class="accordion-item">
+				<div class="accordion-header" id="headingOne">
+					<button class="h2 accordion-button mb-0 collapsed container" type="button" data-bs-toggle="collapse"
+							data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						Recherche
+					</button>
+				</div>
+				<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+					 data-bs-parent="#accordionExample">
+					<div class="p-0 accordion-body">
+						<div>
+							<div class="container">
+								<div class="row mt-3">
+									{{ form_start(form) }}
+									{{ form_row(form.keyword) }}
+									<div class="row">
+										<div class="col-6">
+											{{ form_row(form.fromDate) }}
+										</div>
+										<div class="col-6">
+											{{ form_row(form.toDate) }}
+										</div>
+									</div>
+									<div class="pb-3">
+										{{ form_widget(form.submit, {'attr' : {'class' : 'searchBtn'}}) }}
+									</div>
+									{{ form_rest(form) }}
+									{{ form_end(form) }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr class="featurette-divider mt-0 mb-0">
+		<div class="container">
+			{% for video in videos %}
+				<a href="{{ path('video_show', {'slug':video.slug}) }}" class="link-card"
+				   style="color: black; text-decoration: none; padding: 0; text-transform: none">
+					<div class="card card-custom brd-primary mt-3">
+						<div class="card-header p-0 d-flex justify-content-between align-items-center">
+							<p class="rounded-0 card-name h4 mb-0 p-2 d-inline-block bgrd-primary-light color-accent-light"> {{ video.title }} </p>
+							<p class="m-0 px-3">{{ video.createdAt|format_datetime(locale='fr',pattern='d MMM Y') }}</p>
+						</div>
+					</div>
+				</a>
+			{% endfor %}
+		</div>
+		<div class="d-flex justify-content-center mt-3">
+			{% do videos.setPageRange(5) %}
+			{{ knp_pagination_render(videos, 'pagination/pagination.html.twig') }}
+		</div>
+	</main>
+{% endblock %}

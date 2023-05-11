@@ -1,0 +1,155 @@
+.color-primary {color: rgb(9,116,110);}
+.bgrd-primary {background-color: rgb(9,116,110);}
+.brd-primary {border-color: rgb(9,116,110) !important;}
+
+.color-primary-light {color: rgb(0,154,171) !important;}
+.bgrd-primary-light {background-color: rgb(0,154,171);}
+.brd-primary-light {border-color: rgb(0,154,171);}
+
+.color-secondary {color: rgb(42,56,64);}
+.bgrd-secondary {background-color: rgb(42,56,64);}
+.brd-secondary {border-color: rgb(42,56,64);}
+
+.color-secondary-light {color: rgb(47,62,71);}
+.bgrd-secondary-light {background-color: rgb(47,62,71);}
+.brd-secondary-light {border-color: rgb(47,62,71);}
+
+.color-accent {color: rgb(151,156,154) !important;}
+.bgrd-accent {background-color: rgb(151,156,154);}
+.brd-accent {border-color: rgb(151,156,154);}
+
+.color-accent-light {color: rgb(250,250,250);}
+.bgrd-accent-light {background-color: rgb(250,250,250);}
+.brd-accent-light {border-color: rgb(250,250,250);}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card-custom .card-header {
+    background-color: transparent;
+    border: none;
+}
+
+.card-custom .card-header .card-name {
+    border-bottom: 1px solid rgb(9, 116, 110);
+    border-right: 1px solid rgb(9, 116, 110);
+    border-bottom-right-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+    min-width: 33.33%;
+    max-width: 66.66%;
+}
+
+.card-custom i {
+    color: rgb(9,116,110);
+}
+
+.card-custom {
+    border-width: .5px;
+}
+
+.link-card:hover .card-custom {
+    background-color: rgb(230,230,230);
+}
+
+.link-card:hover .card-name {
+    background-color: rgb(47,62,71);
+}
+
+.accordion {
+    background-color: rgb(230,230,230);
+}
+
+.accordion-item, .accordion-button {
+    background-color: transparent;
+}
+
+.form-control, .form-control:focus, .form-select {
+    background-color: rgb(9,116,110);
+    color: white;
+}
+
+.form-control:disabled, .form-select:disabled {
+    background-color: rgb(47,62,71);
+    color: white;
+}
+
+.form-control::placeholder {
+    color: rgb(250,250,250);
+}
+
+input[type="checkbox"]:checked, input[type="radio"]:checked {
+    background-color: rgb(9,116,110);
+    border-color: rgb(9,116,110);
+}
+
+.searchBtn {
+    background-color: rgb(9,116,110);
+    color: rgb(250,250,250);
+}
+
+.searchBtn:hover {
+    background-color: rgb(0,154,171);
+    color: rgb(250,250,250);
+}
+
+.border-flush {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.pagination {
+    background-color: rgb(250,250,250);
+    border: .5px solid rgb(42,56,64);
+    border-radius: .25rem;
+}
+
+.pagination .page-link {
+    padding: .5rem 1rem;
+    border: none;
+}
+
+.pagination .page-item:first-child .page-link {
+    border-right: solid 1px rgb(42,56,64);
+    margin: 0;
+    color: rgb(250,250,250);
+    z-index: 10;
+    background-color: rgb(0,154,171);
+}
+
+.pagination .page-item:last-child .page-link {
+    border-left: solid 1px rgb(42,56,64);
+    color: rgb(250,250,250);
+    margin: 0;
+    z-index: 10;
+    background-color: rgb(0,154,171);
+}
+
+.pagination .page-item:last-child .page-link:hover,
+.pagination .page-item:first-child .page-link:hover,
+.pagination .page-item:last-child.disabled .page-link,
+.pagination .page-item:first-child.disabled .page-link{
+    background-color: rgb(9,116,110);
+}
+
+.pagination .page-item .page-link {
+    font-weight: bold;
+    color: black;
+}
+.pagination .page-item.active .page-link {
+    background-color: rgb(42,56,64);
+    border-color: rgb(42,56,64);
+    color: rgb(250,250,250);
+}
+
+#cke_1_top, #cke_1_bottom {
+    background-color: rgb(9, 116, 110);
+}
+
+.select2-selection {
+    background-color: rgb(9, 116, 110) !important;
+}

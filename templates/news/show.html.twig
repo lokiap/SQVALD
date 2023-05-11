@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SQVALD | News{% endblock %}
+
+{% block body %}
+    <h1>News</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ news.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ news.title }}</td>
+            </tr>
+            <tr>
+                <th>Resume</th>
+                <td>{{ news.resume }}</td>
+            </tr>
+{#          <tr>
+                <th>Picture</th>
+                <td>{{ news.picture }}</td>
+            </tr>
+            #}
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ news.createdAt ? news.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>StartCreatedAt</th>
+                <td>{{ news.startCreatedAt ? news.startCreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EndCreatedAt</th>
+                <td>{{ news.endCreatedAt ? news.endCreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ news.place }}</td>
+            </tr>
+{# <tr>
+                <th>BrochureFileName</th>
+                <td>{{ news.brochureFileName }}</td>
+            </tr>
+#}
+            <tr>
+                <th>IsActive</th>
+                <td>{{ news.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('news_index') }}">back to list</a>
+
+    <a href="{{ path('news_edit', {'id': news.id}) }}">edit</a>
+
+    {{ include('news/_delete_form.html.twig') }}
+{% endblock %}

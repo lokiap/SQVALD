@@ -1,0 +1,46 @@
+<div id="events-content" class="tab-pane fade" role="tabpanel" aria-labelledby="events-tab">
+	<div class="d-flex flex-row justify-content-between px-3">
+		<h2 class="d-inline m-0">Mes Évènements</h2>
+		<a href="{{ path('event_new') }}" class="btn searchBtn"
+		   style="text-transform: none">Nouvel
+			évènement</a>
+	</div>
+	{% if app.user.events %}
+		<small class="px-3">Cliquez sur un évènement pour le modifier</small>
+		<div class="list-group list-group-flush mt-3">
+			{% for event in app.user.events|sort((a, b) => b.createdAt <=> a.createdAt) %}
+				<div class="d-flex flex-row {% if not(loop.last) %}border-bottom{% endif %}">
+					<a href="{{ path('event_edit', { 'slug' : event.slug }) }}"
+
+					   class="list-group-item list-group-item-action flex-column align-items-start
+										border-0 bgrd-accent-light"
+					   style="text-transform: none; font-weight: normal">
+						{% if not(event.isActive) %}
+							<p class="text-warning m-0">Cet évènement est en attente de validation
+								par
+								un
+								administrateur</p>
+						{% endif %}
+						<div class="d-flex w-100 justify-content-between mb-0">
+							<h3 class="h5 m-0">[{{ event.category }}] {{ event.title }}</h3>
+							<small>{{ event.createdAt|format_datetime(locale='fr',pattern='d MMM Y') }}</small>
+						</div>
+						<p class="mb-2"><small>Du {{ event.dateBegin|format_datetime(locale='fr',pattern='d MMM Y') }} au {{ event.dateEnd|format_datetime(locale='fr',pattern='d MMM Y') }}</small></p>
+						<p style="font-size: 1rem">{{ event.getSummary }}</p>
+						<small>Auteur(s) :
+							{% for author in event.author %}
+								{% if loop.index != 1 %}
+									{{ ', ' }}
+								{% endif %}
+								{{ author.getFullName }}
+							{% endfor %}
+						</small>
+					</a>
+					{{ include('event/_delete_form.html.twig') }}
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>Aucun évènement renseigné</p>
+	{% endif %}
+</div>

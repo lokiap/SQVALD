@@ -1,0 +1,60 @@
+.container-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 3em;
+}
+
+.img-fluid-style {
+  flex: 1;
+  margin-left: 1em;
+  width: 100vw;
+  height: 50vh;
+  margin-right: 1em;
+  border: outset 5px;
+}
+
+.img-fluid-style > img {
+  width: 100%;
+  height: 100%;
+}
+
+.content-style {
+  flex: 2;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.content-style .title {
+  font-weight: bold;
+  color: grey;
+}
+
+.content-style .resume {
+  font-size: 1.3em;
+  text-align: justify;
+  color: grey;
+}
+
+.content-style .date {
+  color: darkgrey;
+  font-size: 1em;
+  text-align: end;
+  font-style: italic;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 1em;
+  flex-direction: column;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-content .author {
+  font-weight: bold;
+  color: gray;
+}

@@ -1,0 +1,41 @@
+<div id="videos-content" class="tab-pane fade" role="tabpanel" aria-labelledby="videos-tab">
+	<div class="d-flex flex-row justify-content-between px-3">
+		<h2 class="d-inline m-0">Mes Vidéos</h2>
+		<a href="{{ path('video_new') }}" class="btn searchBtn"
+		   style="text-transform: none">Nouvelle vidéo</a>
+	</div>
+	{% if app.user.videos %}
+		<small class="px-3">Cliquez sur une vidéo pour la modifier</small>
+		<div class="list-group list-group-flush mt-3">
+			{% for video in app.user.videos|sort((a, b) => b.createdAt <=> a.createdAt) %}
+				<div class="d-flex flex-row {% if not(loop.last) %}border-bottom{% endif %}">
+					<a href="{{ path('video_edit', { 'slug' : video.slug }) }}"
+
+					   class="list-group-item list-group-item-action flex-column align-items-start border-0 bgrd-accent-light"
+					   style="text-transform: none; font-weight: normal">
+						{% if not(video.isActive) %}
+							<p class="text-warning m-0">Cette vidéo est en attente de validation par
+								un
+								administrateur</p>
+						{% endif %}
+						<div class="d-flex w-100 justify-content-between mb-2">
+							<h3 class="h5">[{{ video.getType }}] {{ video.title }}</h3>
+							<small>{{ video.createdAt|format_datetime(locale='fr',pattern='d MMM Y') }}</small>
+						</div>
+						<small>Auteur(s) :
+							{% for author in video.authors %}
+								{% if loop.index != 1 %}
+									{{ ', ' }}
+								{% endif %}
+								{{ author.getFullName }}
+							{% endfor %}
+						</small>
+					</a>
+					{{ include('video/_delete_form.html.twig') }}
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>Aucune nouvelle publiée</p>
+	{% endif %}
+</div>

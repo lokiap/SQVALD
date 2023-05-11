@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ document.title }}{% endblock %}
+
+{% block body %}
+	<div class="container pt-3">
+		<div class="row">
+			{% if document.picture %}
+				<div class="col-4">
+					<img src="{{ vich_uploader_asset(document, 'imageFile') }}" alt="{{ document.title }}"
+						 class="img-fluid rounded">
+				</div>
+			{% endif %}
+			<div class="col-{% if document.picture %}8{% else %}12{% endif %}">
+				<div class="d-flex flex-row align-items-center justify-content-between">
+					<h1>[{{ document.categorydonnees }}] {{ document.title }}</h1>
+					<p class="m-0">Ajouté le {{ document.createdAt|format_datetime(locale='fr',pattern='d MMM Y') }}</p>
+				</div>
+				<p class="m-0">Auteur(s) :
+						{% for author in document.author %}
+							{% if loop.index != 1 %}
+								{{ ', ' }}
+							{% endif %}
+							{{ author.getFullName }}
+						{% endfor %}
+					</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 py-4">
+				{{ document.content|raw }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

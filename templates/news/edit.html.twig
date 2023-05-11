@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SQVALD | Modification | {{ news.title }}{% endblock %}
+
+{% block style %}
+    <style>
+        label.required:after {
+            content: " *";
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    <script>
+        window.onload = function () {
+            var backBtn = document.getElementById('backBtn');
+            var row = document.getElementById('submitRow');
+            row.appendChild(backBtn);
+            var auths = document.getElementById('formAuthors');
+
+            auths.setAttribute('hidden', '');
+            auths.style.visibility = 'hidden';
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="login_register_wrap section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="login_wrap">
+                        <div class="padding_eight_all">
+                            <div class="heading_s1">
+                                <p class="h2 my-3" style="text-align: left">Modifier votre Nouvelle</p>
+                            </div>
+                            <div class="content">
+                                {{ include('news/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+                                <a class="btn btn-light w-auto mx-2" style="text-transform: none" id="backBtn" href="{{ path('account') }}">Retour</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

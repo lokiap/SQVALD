@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SQVALD | Accueil{% endblock %}
+
+{% block style %}
+	<style>
+        .list-content {
+            font-size: 1.25rem;
+        }
+
+        #dataCarousel .carousel-item {
+            height: initial;
+        }
+
+        #dataCarousel .carousel-control-prev:hover, #dataCarousel .carousel-control-next:hover, #dataCarousel a:hover {
+			background-color: rgba(0,0,0,0.02);
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<main>
+		{# Caroussel Data #}
+		<div id="dataCarousel" class="carousel slide carousel-dark mb-0" data-bs-ride="carousel">
+			<div class="carousel-inner border-0">
+				{% set data = shuffle(news|merge(events)|merge(documents)|merge(videos)) %}
+
+				{% for obj in data %}
+					{% if isDocument(obj) %}
+						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"
+							 style="background-color: rgba(255,255,0, .1)">
+							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0"
+								 style="padding: 0 15%; position:initial;">
+								<a href="{{ path('showDocument', {'slug' : obj.slug}) }}" class="py-3 fw-normal w-100"
+								   style="text-transform: none; text-decoration: none; color: unset; font-size: 1.25rem">[Document] {{ obj.title }}</a>
+							</div>
+						</div>
+					{% elseif isEvent(obj) %}
+						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"
+							 style="background-color: rgba(0,0,255, .1)">
+							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0"
+								 style="padding: 0 15%; position:initial;">
+								<a href="{{ path('showEvent', {'slug' : obj.slug}) }}" class="py-3 fw-normal w-100"
+								   style="text-transform: none; text-decoration: none; color: unset; font-size: 1.25rem">[Évènement] {{ obj.title }}</a>
+							</div>
+						</div>
+					{% elseif isNews(obj) %}
+						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"
+							 style="background-color: rgba(0,255,0, .1)">
+							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0"
+								 style="padding: 0 15%; position:initial;">
+								<a href="{{ path('news_show', {'slug' : obj.slug}) }}" class="py-3 fw-normal w-100"
+								   style="text-transform: none; text-decoration: none; color: unset; font-size: 1.25rem">[Nouvelle] {{ obj.title }}</a>
+							</div>
+						</div>
+					{% elseif isVideo(obj) %}
+						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"
+							 style="background-color: rgba(255,0,255, .1)">
+							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0"
+								 style="padding: 0 15%; position:initial;">
+								<a href="{{ path('video_show', {'slug' : obj.slug}) }}" class="py-3 fw-normal w-100"
+								   style="text-transform: none; text-decoration: none; color: unset; font-size: 1.25rem">[Vidéo] {{ obj.title }}</a>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#dataCarousel" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#dataCarousel" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+		{# <hr class="featurette-divider my-0"> #}
+
+		{# Le text de la home page #}
+		<div class="container py-4">
+			<div class="row">
+				<h1 class="border-bottom my-3 h2 color-primary brd-primary fw-bold">SQVALD</h1>
+				<h3 class="my-3 text-start">Objectifs du projet</h3>
+				<ul class="list-content">
+					<li class="mb-3">Fournir une vue globale de l'offre de soins de support dont l'APA
+						<ul>
+							<li>Coordination et intégration de l'existant (ROR, sport-santé, e-santé)</li>
+							<li>Ouverture vers les patients et les aidants</li>
+						</ul>
+					</li>
+					<li class="mb-3">Recommander, organiser et assurer le suivi des parcours prescrits
+						<ul>
+							<li>Adhésion du patient</li>
+							<li>Planification et logistique</li>
+							<li>suivi et accompagnement</li>
+						</ul>
+					</li>
+					<li>Observer, adapter, analyser
+						<ul>
+							<li>« Au fur et à mesure »</li>
+							<li>À posteriori</li>
+							<li>Impact sur la qualité de vie</li>
+							<li>Autonomie du patient</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		{# Caroussel Partenaires #}
+		<div class="bgrd-secondary-light py-3">
+			<h4 class="partenaire-title m-0 color-accent-light" style="padding: 0 0 0 2rem">Nos partenaires</h4>
+			<div id="partnerCarousel" class="carousel slide carousel-dark mb-0" data-bs-ride="carousel">
+				<div class="carousel-inner border-0">
+					{% for partner in partners %}
+						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0 row">
+								<div class="col-lg-5">
+									<div class="partenaire-img">
+										<img class="img-resize" src="{{ vich_uploader_asset(partner, 'illustrationFile') }}"
+											 alt="{{ partner.content }}">
+									</div>
+								</div>
+								<div class="col-lg-7 partenaire-txt color-accent-light">
+									<p>{{ partner.content }}</p>
+									<p><a class="link color-primary" href="{{ partner.btnUrl }}">Découvrir</a></p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#partnerCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" style="filter: unset" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#partnerCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon" style="filter: unset" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+		</div>
+	</main>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DonneesType{% endblock %}
+
+{% block body %}
+    <h1>Edit DonneesType</h1>
+
+    {{ include('donnees_type/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('donnees_type_index') }}">back to list</a>
+
+    {{ include('donnees_type/_delete_form.html.twig') }}
+{% endblock %}
