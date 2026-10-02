@@ -10,11 +10,11 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220509071807 extends AbstractMigration
+final class Version20261002160615 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Initial schema';
     }
 
     public function up(Schema $schema): void
@@ -53,7 +53,7 @@ final class Version20220509071807 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_7CE748AA76ED395 ON reset_password_request (user_id)');
         $this->addSql('COMMENT ON COLUMN reset_password_request.requested_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN reset_password_request.expires_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('CREATE TABLE video (id INT NOT NULL, link VARCHAR(255) DEFAULT NULL, src VARCHAR(255) DEFAULT NULL, update_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE video (id INT NOT NULL, link VARCHAR(255) DEFAULT NULL, src VARCHAR(255) DEFAULT NULL, update_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, title VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, is_active BOOLEAN NOT NULL, slug VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE video_user (video_id INT NOT NULL, user_id INT NOT NULL, PRIMARY KEY(video_id, user_id))');
         $this->addSql('CREATE INDEX IDX_8A048B9529C1004E ON video_user (video_id)');
         $this->addSql('CREATE INDEX IDX_8A048B95A76ED395 ON video_user (user_id)');
@@ -74,19 +74,6 @@ final class Version20220509071807 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SCHEMA public');
-        $this->addSql('ALTER TABLE document DROP CONSTRAINT FK_D8698A76C5290191');
-        $this->addSql('ALTER TABLE event DROP CONSTRAINT FK_3BAE0AA712469DE2');
-        $this->addSql('ALTER TABLE document_user DROP CONSTRAINT FK_2A275ADAC33F7837');
-        $this->addSql('ALTER TABLE event_user DROP CONSTRAINT FK_92589AE271F7E88B');
-        $this->addSql('ALTER TABLE document_user DROP CONSTRAINT FK_2A275ADAA76ED395');
-        $this->addSql('ALTER TABLE event_user DROP CONSTRAINT FK_92589AE2A76ED395');
-        $this->addSql('ALTER TABLE news_user DROP CONSTRAINT FK_584E20C2A76ED395');
-        $this->addSql('ALTER TABLE reset_password_request DROP CONSTRAINT FK_7CE748AA76ED395');
-        $this->addSql('ALTER TABLE video_user DROP CONSTRAINT FK_8A048B95A76ED395');
-        $this->addSql('ALTER TABLE news_user DROP CONSTRAINT FK_584E20C2B5A459A0');
-        $this->addSql('ALTER TABLE member DROP CONSTRAINT FK_70E4FA789393F8FE');
-        $this->addSql('ALTER TABLE video_user DROP CONSTRAINT FK_8A048B9529C1004E');
         $this->addSql('DROP SEQUENCE category_donnees_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE category_news_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE document_id_seq CASCADE');
@@ -96,6 +83,18 @@ final class Version20220509071807 extends AbstractMigration
         $this->addSql('DROP SEQUENCE partner_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE reset_password_request_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE video_id_seq CASCADE');
+        $this->addSql('ALTER TABLE document DROP CONSTRAINT FK_D8698A76C5290191');
+        $this->addSql('ALTER TABLE document_user DROP CONSTRAINT FK_2A275ADAC33F7837');
+        $this->addSql('ALTER TABLE document_user DROP CONSTRAINT FK_2A275ADAA76ED395');
+        $this->addSql('ALTER TABLE event DROP CONSTRAINT FK_3BAE0AA712469DE2');
+        $this->addSql('ALTER TABLE event_user DROP CONSTRAINT FK_92589AE271F7E88B');
+        $this->addSql('ALTER TABLE event_user DROP CONSTRAINT FK_92589AE2A76ED395');
+        $this->addSql('ALTER TABLE member DROP CONSTRAINT FK_70E4FA789393F8FE');
+        $this->addSql('ALTER TABLE news_user DROP CONSTRAINT FK_584E20C2B5A459A0');
+        $this->addSql('ALTER TABLE news_user DROP CONSTRAINT FK_584E20C2A76ED395');
+        $this->addSql('ALTER TABLE reset_password_request DROP CONSTRAINT FK_7CE748AA76ED395');
+        $this->addSql('ALTER TABLE video_user DROP CONSTRAINT FK_8A048B9529C1004E');
+        $this->addSql('ALTER TABLE video_user DROP CONSTRAINT FK_8A048B95A76ED395');
         $this->addSql('DROP TABLE category_donnees');
         $this->addSql('DROP TABLE category_news');
         $this->addSql('DROP TABLE document');
