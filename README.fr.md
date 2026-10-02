@@ -2,6 +2,7 @@
 
 **Français** · [English](README.md)
 
+[![Tests](https://github.com/lokiap/SQVALD/actions/workflows/tests.yml/badge.svg)](https://github.com/lokiap/SQVALD/actions/workflows/tests.yml)
 ![Symfony](https://img.shields.io/badge/Symfony-5.3-000000?logo=symfony)
 ![PHP](https://img.shields.io/badge/PHP-8.1%20%7C%208.2-777BB4?logo=php&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13-4169E1?logo=postgresql&logoColor=white)
@@ -34,7 +35,7 @@ Plateforme web du projet **SQVALD**, un projet de recherche régional (Centre-Va
 
 ## Captures d'écran
 
-> Prises sur une instance locale remplie de données de démonstration.
+> Prises sur une instance locale chargée avec les fixtures de démonstration (voir plus bas).
 
 | Nouvelles | Calendrier |
 |---|---|
@@ -66,7 +67,7 @@ flowchart LR
     P & AD --> ORM[(Doctrine ORM)]
     ORM --> DB[(PostgreSQL)]
     ORM -. postPersist / preUpdate .-> SUB
-    SUB --> MAIL[Mailer / Mailjet]
+    SUB --> MAIL[Symfony Mailer]
     UP --> FS[public/uploads]
 ```
 
@@ -144,8 +145,9 @@ Chaque contenu a un indicateur `isActive` : il reste masqué sur le site public 
 | Administration | EasyAdmin 3 |
 | Authentification | Symfony Security, SymfonyCasts Verify Email et Reset Password |
 | Contenu | CKEditor, VichUploader, LiipImagine, KnpPaginator |
-| E-mail | Symfony Mailer, Mailjet |
+| E-mail | Symfony Mailer |
 | Front-end | Bootstrap, Font Awesome |
+| Qualité | Tests fonctionnels PHPUnit, GitHub Actions |
 | Déploiement | Docker Compose (base de données), `Procfile` Heroku |
 
 ## Installation
@@ -157,44 +159,53 @@ git clone https://github.com/lokiap/SQVALD.git
 cd SQVALD
 composer install
 
-# PostgreSQL + pgAdmin (http://localhost:5050)
+# PostgreSQL sur le port 5432 + pgAdmin sur http://localhost:5050
 docker compose up -d
+
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load     # données de démo
+symfony serve                              # ou : php -S 127.0.0.1:8000 -t public
 ```
 
-Créez un fichier `.env.local` avec vos propres paramètres (à ne jamais committer) :
+Le `.env` versionné ne contient que des valeurs locales par défaut, alignées sur `docker-compose.yml`. Les vrais paramètres (base de données, `APP_SECRET`, `MAILER_DSN`) vont dans un fichier `.env.local`, ignoré par git. Par défaut, les e-mails ne partent pas (`MAILER_DSN=null://null`).
 
-```dotenv
-APP_ENV=dev
-APP_SECRET=a-changer
-DATABASE_URL="postgresql://postgres:admin@127.0.0.1:<port>/sqvald?serverVersion=13&charset=utf8"
-MAILER_DSN=null://null
-```
+### Comptes de démonstration
 
-`<port>` est le port de l'hôte attribué par Docker à PostgreSQL (`docker compose port database 5432`).
+Les fixtures créent les partenaires du consortium, des nouvelles, évènements et documents, ainsi que ces comptes (mot de passe `demo1234` pour tous) :
 
-Créez ensuite le schéma et lancez le serveur :
+| E-mail | Rôle |
+|---|---|
+| `admin@demo.local` | Administrateur |
+| `b.durand@demo.local` | Membre |
+| `c.petit@demo.local` | Membre |
+| `d.moreau@demo.local`, `e.leroy@demo.local` | En attente de validation (connexion refusée) |
+
+## Tests
+
+Des tests fonctionnels couvrent les pages publiques, le filtre de publication (`isActive`), le calendrier, le contrôle d'accès et les règles de connexion (un compte en attente de validation est refusé). Ils tournent sur GitHub Actions, avec PostgreSQL, à chaque push.
 
 ```bash
-php bin/console doctrine:schema:create
-php bin/console assets:install public
-symfony serve        # ou : php -S 127.0.0.1:8000 -t public
+php bin/console doctrine:database:create --env=test
+php bin/console doctrine:migrations:migrate -n --env=test
+php bin/console doctrine:fixtures:load -n --env=test
+php bin/phpunit
 ```
-
-Pour obtenir un compte administrateur, inscrivez-vous sur le site, puis passez en base `is_verified` et `is_valide` à `true` et `roles` à `["ROLE_ADMIN"]` pour cet utilisateur. Les catégories de documents et d'évènements (Article, Rapport, Séminaire…) se créent ensuite depuis le tableau de bord admin.
 
 ## Structure du projet
 
 ```
 src/
 ├── Controller/        # pages publiques, espace membre, Admin/ (CRUD EasyAdmin)
+├── DataFixtures/      # données de démonstration
 ├── Entity/            # User, Partner, News, Event, Document, Video, catégories
 ├── EventSubscriber/   # vérifications à la connexion et e-mails de notification
 ├── Form/              # formulaires des entités et filtres de recherche
 ├── Repository/        # requêtes Doctrine (recherche, calendrier par année)
 └── Security/          # authentificateur, vérification d'e-mail
 templates/             # vues Twig, un dossier par section
+tests/                 # tests fonctionnels (PHPUnit)
 migrations/            # migrations Doctrine
-public/uploads/        # fichiers envoyés
+public/uploads/        # fichiers envoyés (non versionnés)
 ```
 
 ## Licence
