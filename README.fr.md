@@ -16,7 +16,7 @@ Plateforme web du projet **SQVALD**, un projet de recherche régional (Centre-Va
 ## Fonctionnalités
 
 **Site public**
-- Page d'accueil avec un bandeau défilant des dernières nouvelles et un carrousel des partenaires.
+- Page d'accueil qui présente le projet, ses trois axes de recherche, les dernières publications et les logos des partenaires.
 - Page « À propos » avec les objectifs du projet et les work packages.
 - Nouvelles, évènements, documents et vidéos, chacun avec un panneau de recherche/filtres et une pagination.
 - Calendrier des évènements, consultable par année.
@@ -146,7 +146,7 @@ Chaque contenu a un indicateur `isActive` : il reste masqué sur le site public 
 | Authentification | Symfony Security, SymfonyCasts Verify Email et Reset Password |
 | Contenu | CKEditor, VichUploader, LiipImagine, KnpPaginator |
 | E-mail | Symfony Mailer |
-| Front-end | Bootstrap, Font Awesome |
+| Front-end | Bootstrap 5 avec un thème sur mesure, police Inter, Font Awesome |
 | Qualité | Tests fonctionnels PHPUnit, GitHub Actions |
 | Déploiement | Docker Compose (base de données), `Procfile` Heroku |
 

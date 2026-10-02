@@ -2,147 +2,142 @@
 
 {% block title %}SQVALD | Accueil{% endblock %}
 
-{% block style %}
-	<style>
-        .list-content {
-            font-size: 1.25rem;
-        }
-
-        #dataCarousel .carousel-item {
-            height: initial;
-        }
-
-        #dataCarousel .carousel-control-prev:hover, #dataCarousel .carousel-control-next:hover, #dataCarousel a:hover {
-			background-color: rgba(0,0,0,0.02);
-		}
-	</style>
-{% endblock %}
-
 {% block body %}
 	<main>
-		{# Caroussel Data #}
-		<div id="dataCarousel" class="carousel slide carousel-dark mb-0" data-bs-ride="carousel">
-			<div class="carousel-inner border-0">
-				{% set data = shuffle(news|merge(events)|merge(documents)|merge(videos)) %}
-
-				{% for obj in data %}
-					{% if isDocument(obj) %}
-						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"
-							 style="background-color: rgba(255,255,0, .1)">
-							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0"
-								 style="padding: 0 15%; position:initial;">
-								<a href="{{ path('showDocument', {'slug' : obj.slug}) }}" class="py-3 fw-normal w-100"
-								   style="text-transform: none; text-decoration: none; color: unset; font-size: 1.25rem">[Document] {{ obj.title }}</a>
-							</div>
-						</div>
-					{% elseif isEvent(obj) %}
-						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"
-							 style="background-color: rgba(0,0,255, .1)">
-							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0"
-								 style="padding: 0 15%; position:initial;">
-								<a href="{{ path('showEvent', {'slug' : obj.slug}) }}" class="py-3 fw-normal w-100"
-								   style="text-transform: none; text-decoration: none; color: unset; font-size: 1.25rem">[Évènement] {{ obj.title }}</a>
-							</div>
-						</div>
-					{% elseif isNews(obj) %}
-						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"
-							 style="background-color: rgba(0,255,0, .1)">
-							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0"
-								 style="padding: 0 15%; position:initial;">
-								<a href="{{ path('news_show', {'slug' : obj.slug}) }}" class="py-3 fw-normal w-100"
-								   style="text-transform: none; text-decoration: none; color: unset; font-size: 1.25rem">[Nouvelle] {{ obj.title }}</a>
-							</div>
-						</div>
-					{% elseif isVideo(obj) %}
-						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}"
-							 style="background-color: rgba(255,0,255, .1)">
-							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0"
-								 style="padding: 0 15%; position:initial;">
-								<a href="{{ path('video_show', {'slug' : obj.slug}) }}" class="py-3 fw-normal w-100"
-								   style="text-transform: none; text-decoration: none; color: unset; font-size: 1.25rem">[Vidéo] {{ obj.title }}</a>
-							</div>
-						</div>
-					{% endif %}
-				{% endfor %}
-			</div>
-			<button class="carousel-control-prev" type="button" data-bs-target="#dataCarousel" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button" data-bs-target="#dataCarousel" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
-		</div>
-		{# <hr class="featurette-divider my-0"> #}
-
-		{# Le text de la home page #}
-		<div class="container py-4">
-			<div class="row">
-				<h1 class="border-bottom my-3 h2 color-primary brd-primary fw-bold">SQVALD</h1>
-				<h3 class="my-3 text-start">Objectifs du projet</h3>
-				<ul class="list-content">
-					<li class="mb-3">Fournir une vue globale de l'offre de soins de support dont l'APA
-						<ul>
-							<li>Coordination et intégration de l'existant (ROR, sport-santé, e-santé)</li>
-							<li>Ouverture vers les patients et les aidants</li>
-						</ul>
-					</li>
-					<li class="mb-3">Recommander, organiser et assurer le suivi des parcours prescrits
-						<ul>
-							<li>Adhésion du patient</li>
-							<li>Planification et logistique</li>
-							<li>suivi et accompagnement</li>
-						</ul>
-					</li>
-					<li>Observer, adapter, analyser
-						<ul>
-							<li>« Au fur et à mesure »</li>
-							<li>À posteriori</li>
-							<li>Impact sur la qualité de vie</li>
-							<li>Autonomie du patient</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-		{# Caroussel Partenaires #}
-		<div class="bgrd-secondary-light py-3">
-			<h4 class="partenaire-title m-0 color-accent-light" style="padding: 0 0 0 2rem">Nos partenaires</h4>
-			<div id="partnerCarousel" class="carousel slide carousel-dark mb-0" data-bs-ride="carousel">
-				<div class="carousel-inner border-0">
-					{% for partner in partners %}
-						<div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
-							<div class="carousel-caption text-start carousel-responsive justify-content-center mb-0 row">
-								<div class="col-lg-5">
-									<div class="partenaire-img">
-										<img class="img-resize" src="{{ vich_uploader_asset(partner, 'illustrationFile') }}"
-											 alt="{{ partner.content }}">
-									</div>
-								</div>
-								<div class="col-lg-7 partenaire-txt color-accent-light">
-									<p>{{ partner.content }}</p>
-									<p><a class="link color-primary" href="{{ partner.btnUrl }}">Découvrir</a></p>
-								</div>
-							</div>
-						</div>
-					{% endfor %}
+		<section class="sq-hero">
+			<div class="container">
+				<div class="row align-items-center g-5">
+				<div class="col-lg-7">
+				<span class="sq-eyebrow">Projet de recherche · RTR DIAMS · Centre-Val de Loire</span>
+				<h1>Mieux orienter et accompagner les patients en soins de support</h1>
+				<p class="lead mt-3 mb-4">SQVALD réunit chercheurs, soignants et associations pour recommander des activités adaptées aux patients atteints de maladies chroniques, et suivre leur qualité de vie au quotidien.</p>
+				<div class="d-flex flex-wrap gap-3">
+					<a class="sq-btn sq-btn-light" href="{{ path('a_propos') }}">Découvrir le projet <i class="fas fa-arrow-right"></i></a>
+					<a class="sq-btn sq-btn-ghost" href="{{ path('news_index') }}">Voir les actualités</a>
 				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#partnerCarousel" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" style="filter: unset" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#partnerCarousel" data-bs-slide="next">
-					<span class="carousel-control-next-icon" style="filter: unset" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
-				</button>
+				<div class="sq-hero-stats">
+					<div><strong>{{ partners|length }}</strong><span>partenaires</span></div>
+					<div><strong>3</strong><span>axes de recherche</span></div>
+					<div><strong>36</strong><span>mois de projet</span></div>
+				</div>
+				</div>
+				<div class="col-lg-5 d-none d-lg-block">
+					<div class="sq-hero-visual">
+						<div class="sq-glass"><span class="sq-glass-icon"><i class="fas fa-search-location"></i></span><div><strong>Recommander</strong><span>Activités adaptées au profil du patient</span></div></div>
+						<div class="sq-glass"><span class="sq-glass-icon"><i class="fas fa-hands-helping"></i></span><div><strong>Accompagner</strong><span>Organisation et logistique des soins</span></div></div>
+						<div class="sq-glass"><span class="sq-glass-icon"><i class="fas fa-chart-line"></i></span><div><strong>Suivre</strong><span>Qualité de vie mesurée par objets connectés</span></div></div>
+					</div>
+				</div>
+				</div>
 			</div>
-		</div>
+		</section>
+
+		<section class="sq-section">
+			<div class="container">
+				<h2 class="sq-section-title">Objectifs du projet</h2>
+				<p class="sq-section-sub">Trois axes pour rendre l'offre de soins de support plus lisible et le parcours du patient plus simple.</p>
+				<div class="row g-4">
+					<div class="col-md-4">
+						<div class="sq-feature">
+							<div class="sq-feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+							<h3>Une vue globale de l'offre</h3>
+							<ul>
+								<li>Coordination de l'existant (ROR, sport-santé, e-santé)</li>
+								<li>Ouverture vers les patients et les aidants</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="sq-feature">
+							<div class="sq-feature-icon"><i class="fas fa-route"></i></div>
+							<h3>Recommander et organiser</h3>
+							<ul>
+								<li>Adhésion du patient</li>
+								<li>Planification et logistique</li>
+								<li>Suivi et accompagnement</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="sq-feature">
+							<div class="sq-feature-icon"><i class="fas fa-heartbeat"></i></div>
+							<h3>Observer et analyser</h3>
+							<ul>
+								<li>Suivi au fur et à mesure et a posteriori</li>
+								<li>Impact sur la qualité de vie</li>
+								<li>Autonomie du patient</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		{% if news is not empty or documents is not empty or events is not empty %}
+			<section class="sq-section pt-0">
+				<div class="container">
+					<div class="d-flex justify-content-between align-items-end mb-4">
+						<div>
+							<h2 class="sq-section-title">À la une</h2>
+							<p class="sq-section-sub mb-0">Les dernières publications du consortium.</p>
+						</div>
+						<a href="{{ path('news_index') }}" class="fw-semibold text-decoration-none">Toutes les actualités <i class="fas fa-arrow-right"></i></a>
+					</div>
+					<div class="row g-4">
+						{% for event in events %}
+							<div class="col-md-6 col-lg-4">
+								<a class="sq-latest" href="{{ path('showEvent', {'slug': event.slug}) }}">
+									<span class="sq-badge sq-badge-event">Évènement</span>
+									<span class="sq-date">{{ event.dateBegin|format_datetime(locale='fr', pattern='d MMM y') }}</span>
+									<h3>{{ event.title }}</h3>
+									<p>{{ event.resume }}</p>
+								</a>
+							</div>
+						{% endfor %}
+						{% for item in news %}
+							<div class="col-md-6 col-lg-4">
+								<a class="sq-latest" href="{{ path('news_show', {'slug': item.slug}) }}">
+									<span class="sq-badge">Actualité</span>
+									<span class="sq-date">{{ item.createdAt|format_datetime(locale='fr', pattern='d MMM y') }}</span>
+									<h3>{{ item.title }}</h3>
+									<p>{{ item.resume }}</p>
+								</a>
+							</div>
+						{% endfor %}
+						{% for document in documents %}
+							<div class="col-md-6 col-lg-4">
+								<a class="sq-latest" href="{{ path('showDocument', {'slug': document.slug}) }}">
+									<span class="sq-badge sq-badge-doc">{{ document.categorydonnees ? document.categorydonnees.name : 'Document' }}</span>
+									<span class="sq-date">{{ document.createdAt|format_datetime(locale='fr', pattern='d MMM y') }}</span>
+									<h3>{{ document.title }}</h3>
+									<p>{{ document.resume }}</p>
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</section>
+		{% endif %}
+
+		{% if partners is not empty %}
+			<section class="sq-section sq-partners">
+				<div class="container">
+					<h2 class="sq-section-title text-center">Le consortium</h2>
+					<p class="sq-section-sub text-center mx-auto">Laboratoires, établissements de santé, associations et collectivités.</p>
+					<div class="row g-3 align-items-center">
+						{% for partner in partners %}
+							<div class="col-6 col-md-3">
+								<a class="sq-partner-logo" href="{{ partner.btnUrl }}" title="{{ partner.content }}">
+									<img src="{{ vich_uploader_asset(partner, 'illustrationFile') }}" alt="{{ partner.content }}">
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+					<div class="text-center mt-4">
+						<a href="{{ path('partners_index') }}" class="fw-semibold text-decoration-none">Voir tous les partenaires <i class="fas fa-arrow-right"></i></a>
+					</div>
+				</div>
+			</section>
+		{% endif %}
 	</main>
-
-
-
-
-
 {% endblock %}

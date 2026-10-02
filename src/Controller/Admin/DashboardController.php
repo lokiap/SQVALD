@@ -105,12 +105,12 @@ class DashboardController extends AbstractDashboardController
 	public function configureDashboard(): Dashboard
 	{
 		return Dashboard::new()
-			->setTitle('SQVALD');
+			->setTitle('<span style="color:#0b7f78;font-weight:800">SQV</span><span style="font-weight:800">ALD</span>');
 	}
 
 	public function configureMenuItems(): iterable
 	{
-		yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
+		yield MenuItem::linktoDashboard('Tableau de bord', 'fa fa-home');
 
 		yield MenuItem::section('Documents');
 		yield MenuItem::linkToCrud('Tous les documents', 'fas fa-file', Document::class);
@@ -120,8 +120,8 @@ class DashboardController extends AbstractDashboardController
 		yield MenuItem::linkToCrud('Tous les évènements', 'fas fa-calendar', Event::class);
 		yield MenuItem::linkToCrud('Catégories', 'fas fa-list', CategoryNews::class);
 
-		yield MenuItem::section('Nouvelles');
-		yield MenuItem::linkToCrud('Toutes les nouvelles', 'fas fa-newspaper', News::class);
+		yield MenuItem::section('Actualités');
+		yield MenuItem::linkToCrud('Toutes les actualités', 'fas fa-newspaper', News::class);
 
 		yield MenuItem::section('Vidéos');
 		yield MenuItem::linkToCrud('Toutes les vidéos', 'fas fa-video', Video::class);
