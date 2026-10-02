@@ -110,7 +110,7 @@ class Partner
                         		$this->updateAt = $updateAt;
                         	}
 
-	public function getIllustrationFile(): File
+	public function getIllustrationFile(): ?File
                         	{
                         		return $this->illustrationFile;
                         	}
