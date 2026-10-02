@@ -26,3 +26,9 @@ yarn-error.log
 /public/uploads/*
 !/public/uploads/.gitkeep
 ###< local ###
+
+###> env ###
+/.env.local
+/.env.local.php
+/.env.*.local
+###< env ###

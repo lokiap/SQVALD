@@ -1,201 +1,95 @@
 {% extends '@!EasyAdmin/page/content.html.twig' %}
 
-{% block page_title 'SQVALD | Dashboard' %}
+{% block page_title 'Tableau de bord' %}
+
+{% macro queue(title, icon, items, controller, type) %}
+	<div class="sq-queue">
+		<div class="sq-queue-head">
+			<span class="sq-queue-icon"><i class="fas {{ icon }}"></i></span>
+			<h3>{{ title }}</h3>
+			<span class="sq-pending">{{ items|length }} en attente</span>
+		</div>
+		<ul>
+			{% for item in items %}
+				<li>
+					<a href="{{ ea_url().setController(controller).setAction('edit').setEntityId(item.id) }}">
+						<span>
+							{% if type == 'user' %}{{ item.getFullname }} <small class="text-muted">({{ item.email }})</small>
+							{% elseif type == 'document' %}<b>{{ item.categorydonnees }}</b> · {{ item.title }}
+							{% elseif type == 'event' %}<b>{{ item.category }}</b> · {{ item.title }}
+							{% else %}{{ item.title }}{% endif %}
+						</span>
+						<i class="fas fa-chevron-right"></i>
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endmacro %}
 
 {% block page_content %}
-	<div class="container">
-		<div class="row">
-			<h2 class="partenaire-title border-bottom" style="padding: 0.5rem 0">Statistiques</h2>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-3 px-4">
-				<div class="card text-center p-4" style="background-color: rgba(0,0,0,.1)">
-					<div class="card-text">
-						<p class="display-3 fw-bold">{{ nbDocuments }}</p>
-						<p class="h1 fw-normal">Documents</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-3 px-4">
-				<div class="card text-center p-4" style="background-color: rgba(0,0,0,.1)">
-					<div class="card-text">
-						<p class="display-3 fw-bold">{{ nbUsers }}</p>
-						<p class="h1 fw-normal">Utilisateurs</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-3 px-4">
-				<div class="card text-center p-4" style="background-color: rgba(0,0,0,.1)">
-					<div class="card-text">
-						<p class="display-3 fw-bold">{{ nbEvents }}</p>
-						<p class="h1 fw-normal">Évènements</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row justify-content-center mt-5">
-			<div class="col-3 px-4">
-				<div class="card text-center p-4" style="background-color: rgba(0,0,0,.1)">
-					<div class="card-text">
-						<p class="display-3 fw-bold">{{ nbNews }}</p>
-						<p class="h1 fw-normal">Nouvelles</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-3 px-4">
-				<div class="card text-center p-4" style="background-color: rgba(0,0,0,.1)">
-					<div class="card-text">
-						<p class="display-3 fw-bold">{{ nbVideos }}</p>
-						<p class="h1 fw-normal">Vidéos</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<h2 class="partenaire-title border-bottom mt-5" style="padding: 0.5rem 0">Validation</h2>
-		</div>
-		<div class="row">
-			{% for column in data %}
-				<div class="col-6">
-					{% for object in column %}
-						<div class="card mb-3">
-							{% if isUser(object[0]) %}
-								<div class="card-header d-flex justify-content-between align-items-center"
-									 style="background-color: rgba(255, 0, 0, .2)">
-									<h3 class="m-0">Utilisateurs</h3>
-									<p class="m-0">
-										{{ object|length }} utilisateur{% if object|length > 1 %}s{% endif %} en attente
-										de validation
-									</p>
-								</div>
-								<ul class="list-group list-group-flush">
-									{% for user in object %}
-										<li onmouseover="
-                                        this.style.backgroundColor = 'rgba(0,0,0, .05)';
-                                        this.style.fontWeight = 'bold';"
-											onmouseout="
-                                        this.style.backgroundColor = 'transparent';
-                                        this.style.fontWeight = 'normal';"
-											onclick="location.href='{{ ea_url()
-												.setController('App\\Controller\\Admin\\UserCrudController')
-												.setAction('edit')
-												.setEntityId(user.id) }}';" class="list-group-item"
-											style="cursor: pointer">
-											{{ user.getFullname }} ({{ user.email }})
-										</li>
-									{% endfor %}
-								</ul>
-							{% elseif isDocument(object[0]) %}
-								<div class="card-header d-flex justify-content-between align-items-center"
-									 style="background-color: rgba(255, 0, 0, .2)">
-									<h3 class="m-0">Documents</h3>
-									<p class="m-0">
-										{{ object|length }} document{% if object|length > 1 %}s{% endif %} en attente de
-										validation
-									</p>
-								</div>
-								<ul class="list-group list-group-flush">
-									{% for document in object %}
-										<li onmouseover="
-                                        this.style.backgroundColor = 'rgba(0,0,0, .05)';
-                                        this.style.fontWeight = 'bold';"
-											onmouseout="
-                                        this.style.backgroundColor = 'transparent';
-                                        this.style.fontWeight = 'normal';"
-											onclick="location.href='{{ ea_url()
-												.setController('App\\Controller\\Admin\\DocumentCrudController')
-												.setAction('edit')
-												.setEntityId(document.id) }}';" class="list-group-item"
-											style="cursor: pointer">
-											<b>{{ document.categorydonnees }} : </b>{{ document.title }}
-										</li>
-									{% endfor %}
-								</ul>
-							{% elseif isNews(object[0]) %}
-								<div class="card-header d-flex justify-content-between align-items-center"
-									 style="background-color: rgba(255, 0, 0, .2)">
-									<h3 class="m-0">Nouvelles</h3>
+	{% import _self as dashboard %}
+	<style>
+		.sq-dash { --sq-primary: #0b7f78; --sq-soft: #e6f4f2; --sq-border: #e2e8f0; --sq-muted: #64748b; max-width: 1200px; }
+		.sq-dash h2 { font-size: 1.05rem; font-weight: 600; color: var(--sq-muted); text-transform: uppercase; letter-spacing: .06em; margin: 0 0 1rem; }
+		.sq-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+		.sq-stat { display: flex; align-items: center; gap: 1rem; background: #fff; border: 1px solid var(--sq-border); border-radius: 14px; padding: 1.25rem; text-decoration: none; box-shadow: 0 1px 2px rgba(15,31,42,.05); transition: box-shadow .15s ease, transform .15s ease; }
+		.sq-stat:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(15,31,42,.08); text-decoration: none; }
+		.sq-stat-icon { width: 2.75rem; height: 2.75rem; border-radius: 12px; display: grid; place-items: center; background: var(--sq-soft); color: var(--sq-primary); font-size: 1.1rem; flex-shrink: 0; }
+		.sq-stat strong { display: block; font-size: 1.75rem; line-height: 1.1; font-weight: 800; color: #0f1f2a; }
+		.sq-stat span { color: var(--sq-muted); font-size: .9rem; }
+		.sq-queues { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; align-items: start; }
+		.sq-queue { background: #fff; border: 1px solid var(--sq-border); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(15,31,42,.05); }
+		.sq-queue-head { display: flex; align-items: center; gap: .75rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--sq-border); }
+		.sq-queue-head h3 { font-size: 1rem; font-weight: 700; margin: 0; flex-grow: 1; color: #0f1f2a; }
+		.sq-queue-icon { width: 2rem; height: 2rem; border-radius: 8px; display: grid; place-items: center; background: #fef3c7; color: #b45309; font-size: .85rem; }
+		.sq-pending { font-size: .75rem; font-weight: 600; padding: .25rem .6rem; border-radius: 999px; background: #fef3c7; color: #92400e; }
+		.sq-queue ul { list-style: none; margin: 0; padding: 0; }
+		.sq-queue li + li { border-top: 1px solid var(--sq-border); }
+		.sq-queue li a { display: flex; justify-content: space-between; align-items: center; padding: .8rem 1.25rem; color: #334155; text-decoration: none; }
+		.sq-queue li a:hover { background: #f8fafc; color: var(--sq-primary); }
+		.sq-queue li i { color: #cbd5e1; font-size: .75rem; }
+		.sq-empty { background: #fff; border: 1px dashed var(--sq-border); border-radius: 14px; padding: 2rem; text-align: center; color: var(--sq-muted); }
+	</style>
 
-									<p class="m-0">
-										{{ object|length }} nouvelle{% if object|length > 1 %}s{% endif %} en attente de
-										validation
-									</p>
-								</div>
-								<ul class="list-group list-group-flush">
-									{% for cNews in object %}
-										<li onmouseover="
-                                        this.style.backgroundColor = 'rgba(0,0,0, .05)';
-                                        this.style.fontWeight = 'bold';"
-											onmouseout="
-                                        this.style.backgroundColor = 'transparent';
-                                        this.style.fontWeight = 'normal';"
-											onclick="location.href='{{ ea_url()
-												.setController('App\\Controller\\Admin\\NewsCrudController')
-												.setAction('edit')
-												.setEntityId(cNews.id) }}';" class="list-group-item"
-											style="cursor: pointer">
-											{{ cNews.title }}
-										</li>
-									{% endfor %}
-								</ul>
-							{% elseif isEvent(object[0]) %}
-								<div class="card-header d-flex justify-content-between align-items-center"
-									 style="background-color: rgba(255, 0, 0, .2)">
-									<h3 class="m-0">Évènements</h3>
-									<p class="m-0">
-										{{ object|length }} évènement{% if object|length > 1 %}s{% endif %} en attente
-										de validation
-									</p>
-								</div>
-								<ul class="list-group list-group-flush">
-									{% for event in object %}
-										<li onmouseover="
-                                        this.style.backgroundColor = 'rgba(0,0,0, .05)';
-                                        this.style.fontWeight = 'bold';"
-											onmouseout="
-                                        this.style.backgroundColor = 'transparent';
-                                        this.style.fontWeight = 'normal';"
-											onclick="location.href='{{ ea_url()
-												.setController('App\\Controller\\Admin\\EventCrudController')
-												.setAction('edit')
-												.setEntityId(event.id) }}';" class="list-group-item"
-											style="cursor: pointer">
-											<b>{{ event.category }} : </b>{{ event.title }}
-										</li>
-									{% endfor %}
-								</ul>
-							{% elseif isVideo(object[0]) %}
-								<div class="card-header d-flex justify-content-between align-items-center"
-									 style="background-color: rgba(255, 0, 0, .2)">
-									<h3 class="m-0">Vidéos</h3>
-
-									<p class="m-0">
-										{{ object|length }} vidéo{% if object|length > 1 %}s{% endif %} en attente de
-										validation
-									</p>
-								</div>
-								<ul class="list-group list-group-flush">
-									{% for video in object %}
-										<li onmouseover="
-                                        this.style.backgroundColor = 'rgba(0,0,0, .05)';
-                                        this.style.fontWeight = 'bold';"
-											onmouseout="
-                                        this.style.backgroundColor = 'transparent';
-                                        this.style.fontWeight = 'normal';"
-											onclick="location.href='{{ ea_url()
-												.setController('App\\Controller\\Admin\\VideoCrudController')
-												.setAction('edit')
-												.setEntityId(video.id) }}';" class="list-group-item"
-											style="cursor: pointer">
-											{{ video.title }}
-										</li>
-									{% endfor %}
-								</ul>
-							{% endif %}
-						</div>
-					{% endfor %}
-				</div>
+	<div class="sq-dash">
+		<h2>Vue d'ensemble</h2>
+		<div class="sq-stats">
+			{% for stat in [
+				{count: nbDocuments, label: 'Documents', icon: 'fa-file-alt', controller: 'App\\Controller\\Admin\\DocumentCrudController'},
+				{count: nbEvents, label: 'Évènements', icon: 'fa-calendar-alt', controller: 'App\\Controller\\Admin\\EventCrudController'},
+				{count: nbNews, label: 'Actualités', icon: 'fa-newspaper', controller: 'App\\Controller\\Admin\\NewsCrudController'},
+				{count: nbVideos, label: 'Vidéos', icon: 'fa-video', controller: 'App\\Controller\\Admin\\VideoCrudController'},
+				{count: nbUsers, label: 'Utilisateurs', icon: 'fa-users', controller: 'App\\Controller\\Admin\\UserCrudController'},
+			] %}
+				<a class="sq-stat" href="{{ ea_url().setController(stat.controller).setAction('index') }}">
+					<span class="sq-stat-icon"><i class="fas {{ stat.icon }}"></i></span>
+					<div><strong>{{ stat.count }}</strong><span>{{ stat.label }}</span></div>
+				</a>
 			{% endfor %}
 		</div>
+
+		<h2>À valider</h2>
+		{% if data is empty %}
+			<div class="sq-empty"><i class="fas fa-check-circle"></i> Rien en attente de validation.</div>
+		{% else %}
+			<div class="sq-queues">
+				{% for column in data %}
+					{% for object in column %}
+						{% if isUser(object[0]) %}
+							{{ dashboard.queue('Comptes', 'fa-user-clock', object, 'App\\Controller\\Admin\\UserCrudController', 'user') }}
+						{% elseif isDocument(object[0]) %}
+							{{ dashboard.queue('Documents', 'fa-file-alt', object, 'App\\Controller\\Admin\\DocumentCrudController', 'document') }}
+						{% elseif isNews(object[0]) %}
+							{{ dashboard.queue('Actualités', 'fa-newspaper', object, 'App\\Controller\\Admin\\NewsCrudController', 'news') }}
+						{% elseif isEvent(object[0]) %}
+							{{ dashboard.queue('Évènements', 'fa-calendar-alt', object, 'App\\Controller\\Admin\\EventCrudController', 'event') }}
+						{% elseif isVideo(object[0]) %}
+							{{ dashboard.queue('Vidéos', 'fa-video', object, 'App\\Controller\\Admin\\VideoCrudController', 'video') }}
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+			</div>
+		{% endif %}
 	</div>
 {% endblock %}

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head class="pb-0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
+    <meta name="description" content="SQVALD : plateforme du consortium de recherche sur les soins de support en Centre-Val de Loire">
     <title>{% block title %}SQVALD{% endblock %}</title>
 
 
@@ -16,11 +14,8 @@
     <link href="{{ asset('assets/css/styles/styleForm.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/styles/styleDescrip.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/styles/global.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/css/styles/theme.css') }}" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&display=swap"
-          rel="stylesheet">
 
     <link href="{{ asset('assets/fontawesome-free-5.15.4-web/fontawesome-free-5.15.4-web/css/all.css') }}"
           rel="stylesheet">
@@ -87,6 +82,7 @@
 </head>
 <body class="bgrd-accent-light pb-0">
 <header>
+    {% set route = app.request.attributes.get('_route') %}
     <nav class="navbar navbar-expand-md navbar-light fixed-top bgrd-secondary" style="padding-left: 12px; padding-right: 12px">
 
         <a class="navbar-brand color-primary-light" href="/">SQV<span class="color-accent-light">ALD</span></a>
@@ -96,30 +92,30 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor03">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link color-primary-light" href="{{ path('home') }}">Accueil
+                    <a class="nav-link color-primary-light{% if route == 'home' %} active{% endif %}" href="{{ path('home') }}">Accueil
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link color-primary-light" href="{{ path('a_propos') }}">A propos</a>
+                    <a class="nav-link color-primary-light{% if route == 'a_propos' %} active{% endif %}" href="{{ path('a_propos') }}">À propos</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link color-primary-light" href="{{ path('documents_index') }}">Documents</a>
+                    <a class="nav-link color-primary-light{% if route == 'documents_index' %} active{% endif %}" href="{{ path('documents_index') }}">Documents</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link color-primary-light" href="{{ path('news_index') }}">News</a>
+                    <a class="nav-link color-primary-light{% if route == 'news_index' %} active{% endif %}" href="{{ path('news_index') }}">Actualités</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link color-primary-light" href="{{ path('calendar') }}">Calendrier</a>
+                    <a class="nav-link color-primary-light{% if route == 'calendar' %} active{% endif %}" href="{{ path('calendar') }}">Calendrier</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link color-primary-light" href="{{ path('videos_index') }}">Vidéos</a>
+                    <a class="nav-link color-primary-light{% if route == 'videos_index' %} active{% endif %}" href="{{ path('videos_index') }}">Vidéos</a>
                 </li>
 
                 <li class="nav-item dropdown color-primary-light">
@@ -159,6 +155,34 @@
 {% block body %}
 
 {% endblock %}
+
+<footer class="sq-footer">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="brand mb-2">SQVALD</div>
+                <p class="mb-0">Projet de recherche régional sur l'organisation et le suivi des soins de support des patients atteints de maladies chroniques, en Centre-Val de Loire.</p>
+            </div>
+            <div class="col-6 col-lg-3 offset-lg-1">
+                <h6>Le projet</h6>
+                <ul>
+                    <li><a href="{{ path('a_propos') }}">À propos</a></li>
+                    <li><a href="{{ path('partners_index') }}">Partenaires</a></li>
+                    <li><a href="{{ path('show_membre') }}">Membres</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-lg-3">
+                <h6>Ressources</h6>
+                <ul>
+                    <li><a href="{{ path('news_index') }}">Actualités</a></li>
+                    <li><a href="{{ path('calendar') }}">Calendrier</a></li>
+                    <li><a href="{{ path('documents_index') }}">Documents</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom">© SQVALD · RTR DIAMS, Région Centre-Val de Loire</div>
+    </div>
+</footer>
 {# <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> #}
 

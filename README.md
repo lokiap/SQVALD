@@ -16,7 +16,7 @@ Web platform for **SQVALD**, a regional research project (Centre-Val de Loire, R
 ## Features
 
 **Public site**
-- Home page with a rolling banner of the latest news and a partner carousel.
+- Home page presenting the project, its three research axes, the latest publications and the partner logos.
 - "About" page with the project's objectives and work packages.
 - News, events, documents and videos, each with a search/filter panel and pagination.
 - Calendar of events, browsable by year.
@@ -146,7 +146,7 @@ Every piece of content has an `isActive` flag: it stays hidden from the public s
 | Auth | Symfony Security, SymfonyCasts Verify Email & Reset Password |
 | Content | CKEditor, VichUploader, LiipImagine, KnpPaginator |
 | E-mail | Symfony Mailer |
-| Front-end | Bootstrap, Font Awesome |
+| Front-end | Bootstrap 5 with a custom theme, Inter font, Font Awesome |
 | Quality | PHPUnit functional tests, GitHub Actions |
 | Deployment | Docker Compose (database), Heroku `Procfile` |
 
