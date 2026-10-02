@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Classe\Mail;
 use App\Classe\SearchMembre;
 use App\Entity\Partner;
 use App\Entity\User;
